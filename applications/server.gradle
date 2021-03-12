@@ -19,5 +19,19 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-actuator"
     compile "io.pivotal.spring.cloud:spring-cloud-services-starter-service-registry"
 
+    //sso
+//    The spring-cloud-sso-connector dependency will automate configuration of the application
+//    when bound to an identity service on PAS. The spring-security-oauth2-autoconfigure
+//    dependency allows Spring Boot 2 to continue to use older style OAuth2 configuration.
+//    See this article for details.
+    compile "org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:$springSecurityOAuthAutoconfigVersion"
+    compile "io.pivotal.spring.cloud:spring-cloud-sso-connector:$springCloudSsoVersion"
+
     testCompile project(":components:test-support")
 }
+
+bootRun.environment([
+        "APPLICATION_OAUTH_ENABLED": true,
+        "SECURITY_OAUTH2_CLIENT_CLIENT_ID": "tracker-client",
+        "SECURITY_OAUTH2_CLIENT_CLIENT_SECRET": "supersecret"
+])
